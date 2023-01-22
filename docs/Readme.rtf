@@ -1,0 +1,585 @@
+{\rtf1\ansi\ansicpg1252\cocoartf949\cocoasubrtf540
+{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;\f2\fmodern\fcharset0 Courier-Bold;
+\f3\fnil\fcharset0 LucidaGrande;\f4\fmodern\fcharset0 Courier-Oblique;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue247;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc2\leveljcn2\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid0\'02\'05.;}{\levelnumbers\'01;}}{\listlevel\levelnfc0\levelnfcn0\leveljc2\leveljcn2\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid1\'02\'05.;}{\levelnumbers\'01;}}{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc2\leveljcn2\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid0\'02\'05.;}{\levelnumbers\'01;}}{\listname ;}\listid2}
+{\list\listtemplateid3\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc2\leveljcn2\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid0\'02\'05.;}{\levelnumbers\'01;}}{\listname ;}\listid3}
+{\list\listtemplateid4\listhybrid{\listlevel\levelnfc0\levelnfcn0\leveljc2\leveljcn2\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{decimal\}.}{\leveltext\leveltemplateid0\'02\'05.;}{\levelnumbers\'01;}}{\listname ;}\listid4}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}{\listoverride\listid3\listoverridecount0\ls3}{\listoverride\listid4\listoverridecount0\ls4}}
+\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\deftab720
+\pard\pardeftab720\sa280\ql\qnatural
+
+\f0\b\fs36 \cf0 Lightspeed - A continuation of Mozilla's Camino for PowerPC Macs\
+----------------------------\
+Preparing to Build: Tools\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Mac OS X 10.4.11 and Xcode 2.4.1 or later are now required for building Camino (Xcode 2.5 on Mac OS X 10.4.11 or Xcode 3 on Mac OS X 10.5.8 are recommended; on Mac OS X 10.5, the MacPorts package system that can be used to install certain build dependencies\'97see below\'97requires Xcode 3.1). Xcode is included on a separate disk with the purchase of a new Mac, and the latest version is always available as a free download from {\field{\*\fldinst{HYPERLINK "http://developer.apple.com/"}}{\fldrslt \cf2 \ul \ulc2 Apple Developer Connection}}.\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\i \cf0 Note that Gecko 1.9.2 (and thus Camino) does not yet build \'93out-of-the-box\'94 on Mac OS X 10.6. At appropriate places in this guide, you will be referred to supplemental information in {\field{\*\fldinst{HYPERLINK "https://wiki.caminobrowser.org/Development:Building:Mac_OS_X_10.6"}}{\fldrslt \cf2 \ul \ulc2 Development:Building:Mac OS X 10.6}}, which describes local changes you must make in order to build successfully on Mac OS X 10.6. ({\field{\*\fldinst{HYPERLINK "https://bugzilla.mozilla.org/show_bug.cgi?id=514495"}}{\fldrslt \cf2 \ul \ulc2 Bug 514495}} is tracking the ability to build out-of-the-box on Mac OS X 10.6.)
+\i0 \
+In addition to disk space required by developer tools and build prerequisites, you will need approximately 2 GB of free disk space for a single debug tree (a Universal build requires approximately 50% more free space).\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 Installing Mac OS X Cross Development SDKs\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Camino requires a custom Xcode installation to build properly: during installation, turn on the \'93Mac OS X 10.4 SDK\'94 option (in older versions of Xcode, you may have to click the \'93Customize\'94 button and turn on the \'93UNIX Development\'94 and \'93Mac OS X 10.4 SDK\'94 options\'97the latter is part of the \'93Cross Development\'94 section in even older Xcode versions). If you have previously installed Xcode without these options, run the installer again to add Cross Development before attempting to build Camino. Current versions of Camino require the 10.4u SDK for PPC, Intel, and Universal builds. If you are building older versions of Camino, other SDKs are required; see the {\field{\*\fldinst{HYPERLINK "https://wiki.caminobrowser.org/Development:Building:Mozilla_1.9.2_Branch#Appendix"}}{\fldrslt \cf2 \ul \ulc2 Appendix}} for details.\
+Regardless of which version of Mac OS X you are using, we recommend you always upgrade to the latest "point" release of the OS (e.g., Mac OS X 10.4.11, Mac OS X 10.5.8, and Mac OS X 10.6.4 as of June 2010) and the latest Xcode version available for that version of Mac OS X (Xcode 2.5 on 10.4.11, Xcode 3.1.4 on 10.5.8, Xcode 3.2 on 10.6.4; previous versions of Xcode are available from {\field{\*\fldinst{HYPERLINK "http://developer.apple.com/resources/"}}{\fldrslt \cf2 \ul \ulc2 http://developer.apple.com/resources/}}, "Developer Downloads", "Developer Tools" and then search for "Xcode").\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 Upgrading Xcode\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 When you upgrade to a newer version of Xcode, even a minor-point release, be sure to 
+\b re-install the Cross Development SDKs
+\b0  from the new version. In addition, 
+\b delete the Xcode header cache
+\b0  in 
+\f1 /Library/Caches/com.apple.Xcode.501/SharedPrecompiledHeaders
+\f0  (where 
+\f1 501
+\f0  is your user ID) or 
+\f1 $TMPDIR/../-Caches-/com.apple.Xcode.501
+\f0  before building Camino. Xcode 3.1 and higher have an \'93Empty Caches\'85\'94 menu item in the Xcode menu that will perform this step.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 Installing 
+\f2 libIDL
+\f0  and 
+\f2 autoconf-2.13
+\f0 \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Mozilla requires 
+\f1 libIDL
+\f0  and 
+\f1 autoconf-2.13
+\f0  in order to build (the version of 
+\f1 autoconf
+\f0  shipped with Xcode will not work; 
+\b you must install 
+\f2 autoconf-2.13
+\f0\b0 ). While you can build these packages (and their dependencies) from source yourself, most developers use {\field{\*\fldinst{HYPERLINK "http://www.macports.org/"}}{\fldrslt \cf2 \ul \ulc2 MacPorts}}. MacPorts is easier to use and is recommended. When installing a new major version of Mac OS X, be sure to upgrade MacPorts to the version appropriate for that Mac OS X version.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls1\ilvl0\cf0 {\listtext	1.	}Download the {\field{\*\fldinst{HYPERLINK "http://www.macports.org/install.php#pkg"}}{\fldrslt \cf2 \ul \ulc2 latest MacPorts release}} for your version of Mac OS X and install it. MacPorts installs in 
+\f1 /opt/local
+\f0  by default. After running the MacPorts installer, the changes that it makes to the shell environment will be available in any new Terminal window.
+\f3 \uc0\u8232 
+\f0 \
+{\listtext	2.	}Open a 
+\b new Terminal window
+\b0  and install the ports (
+\b N.B.
+\b0  you will need to use an Administrator account or your account must be listed in the 
+\f1 sudoers
+\f0  file)\
+\pard\tx940\tx1440\pardeftab720\li1440\fi-1440\ql\qnatural
+\ls1\ilvl1
+\f1 \cf0 {\listtext	1.	}$ sudo port install libidl +powerpc
+\f0  This will take some time as the sources for 
+\f1 libIDL
+\f0  and its dependencies are downloaded and installed. If you are on Mac OS X 10.6 and already have some ports installed, see {\field{\*\fldinst{HYPERLINK "https://wiki.caminobrowser.org/Development:Building:Mozilla_1.9.2_Branch#Installing_libIDL_in_an_existing_MacPorts_installation_on_Mac_OS_X_10.6"}}{\fldrslt \cf2 \ul \ulc2 below}} for additional steps that are required. (The 
+\f1 +universal
+\f0  flag is not necessary on Mac OS X 10.4 or 10.5.)
+\f3 \uc0\u8232 
+\f0 \
+\ls1\ilvl1
+\f1 {\listtext	2.	}$ sudo port install autoconf213 +powerpc
+\f0  The above command installs autoconf-2.13 to 
+\f1 /opt/local/bin/autoconf213
+\f0  using MacPorts. You will need to type 
+\f1 autoconf213
+\f0  to run it when other documentation might instruct you to run 
+\f1 autoconf
+\f0 . 
+\b Do not install the autoconf package without the 213 suffix.
+\f3\b0 \uc0\u8232 
+\f0 \
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 The 
+\f1 +universal
+\f0  flag is incompatible with PowerPC on Mac OS X 10.4 or 10.5 due to introduction of the 
+\b +powerpc
+\b0  flag.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 Installing 
+\f2 libIDL
+\f0  in an existing MacPorts installation on Mac OS X 10.6\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 MacPorts on 10.6 is unable to install 
+\f1 libIDL
+\f0  with the 
+\f1 +universal
+\f0  flag if you have already installed any of 
+\f1 libIDL
+\f0 \'92s dependencies without the 
+\f1 +universal
+\f0  flag; this is reported to be a MacPorts bug.\
+According to internet sources, you should be able to use 
+\f1 sudo port upgrade --enforce-variants libidl +universal
+\f0  to force MacPorts to upgrade all of 
+\f1 libIDL
+\f0 \'92s dependencies to the 
+\f1 +universal
+\f0  variant; you should then be able to install a 
+\f1 +universal
+\f0  MacPorts. (As a last resort, try the MacPorts {\field{\*\fldinst{HYPERLINK "http://trac.macports.org/wiki/Migration"}}{\fldrslt \cf2 \ul \ulc2 migration steps}}, or remove MacPorts and reinstall from scratch.)\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 Installing Mercurial\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Current Mozilla development uses Mercurial (\'93hg\'94) for version control. Unlike common version-control systems (CVS, svn), Mercurial is not included as part of the Mac OS X Developer Tools.\
+Mercurial has binary packages available for {\field{\*\fldinst{HYPERLINK "http://mercurial.selenic.com/downloads/"}}{\fldrslt \cf2 \ul \ulc2 Mac OS X 10.5 and 10.6}}, or you can install it via MacPorts. 
+\i As of August 2010, Mercurial in MacPorts fails to install on Mac OS X 10.6 due to bad checksums for patches in python dependencies; use the Mercurial binary package instead.
+\i0  [Looks like this is fixed as of Feb 2012 --cl]\
+To install Mercurial from MacPorts:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls2\ilvl0
+\f1 \cf0 {\listtext	\'95	}$ sudo port install mercurial
+\f0  This will take some time as the sources for 
+\f1 mercurial
+\f0  and its dependencies are downloaded and installed.
+\f3 \uc0\u8232 
+\f0\b N.B.
+\b0  The version of Mercurial from MacPorts will install Python 2.6; by default that version of Python will attempt to build all of X.org X11 for the Python IDE. You can avoid this extra compile time by first installing Python 2.6 with the 
+\f1 no_tkinter
+\f0  variant and then installing Mercurial: 
+\f1 $ sudo port install python26 +no_tkinter; sudo port install mercurial
+\f3 \uc0\u8232 
+\f0 \
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 Selecting the Required Python Version on Mac OS X 10.4\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 The Gecko build system requires at least Python 2.4, but Mac OS X 10.4 ships with Python 2.3. If you use MacPorts to install Mercurial, it will install Python 2.6. You can then install 
+\f1 python_select
+\f0  to make the MacPorts version the default Python version.\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f1 \cf0 $ sudo port install python_select\uc0\u8232 $ sudo python_select -s python26
+\f0  \'a0(some MacPorts versions instead require 
+\f1 sudo python_select python26
+\f0  )\
+Unfortunately, the Gecko 
+\f1 configure
+\f0  script may fail to detect the MacPorts Python and will still fail, claiming Python 2.4 or greater is not installed. If this happens, 
+\f1 configure
+\f0  can be tricked by making a symlink of the MacPorts Python that points to a \'93Python binary filename\'94 that 
+\f1 configure
+\f0  looks for:\
+
+\f1 $ sudo ln /opt/local/bin/python /opt/local/bin/python2.5
+\f0 \
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 Setting up your Hg Environment\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\i\b0\fs24 \cf0 If you are building from the {\field{\*\fldinst{HYPERLINK "ftp://ftp.mozilla.org/pub/mozilla.org/camino/source"}}{\fldrslt \cf2 \ul \ulc2 source tarball}} and never plan to update your Camino source code except by downloading a new source tarball, you can skip this section. Most users should perform these steps, however, and 
+\b if you are doing development, you should 
+\i0 not
+\i  use the tarball.
+\b0  (In particular, unlike a tarball from CVS, a tarball from Hg does not contain the metadata necessary to provide an updatable source tree.)
+\i0 \
+Mercurial configures itself via a hidden 
+\f1 .hgrc
+\f0  file in your home folder. Create a new plain-text 
+\f1 ~/.hgrc
+\f0  file in your favorite text editor and populate it with the following:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 [ui]\
+username = Your Name <email@domain.tld>\
+merge = internal:merge\
+\
+[defaults]\
+commit = -v\
+diff = -U 8 -p\
+qdiff = -U 8\
+\
+[diff]\
+git = 1\
+showfunc = 1\
+unified = 8\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Mozilla\'92s Mercurial instructions exhort you to choose a {\field{\*\fldinst{HYPERLINK "http://www.selenic.com/mercurial/wiki/index.cgi/MergeProgram"}}{\fldrslt \cf2 \ul \ulc2 merge program}} now and to learn how to use it, without providing much useful guidance. The configuration above defaults to the traditional \'93try to merge and leave conflict markers\'94 merging; if you have a favorite visual merge tool, configure it now, but otherwise you may want try various tools later on to see if such a tool exists for Mac OS X that doesn\'92t suck and doesn\'92t make you want to gouge your eyes out.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 Pulling Source and Building Gecko and Camino\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\i\fs24 \cf0 N.B.
+\b0  These instructions will build the \'93trunk\'94 by default. If you want to build a specific branch (or a release or milestone from cvs rather than from the source tarball), please see the {\field{\*\fldinst{HYPERLINK "https://wiki.caminobrowser.org/Development:Building:FAQ"}}{\fldrslt \cf2 \ul \ulc2 FAQ}} for changes you will need to make to some of these commands.
+\i0 \
+\pard\pardeftab720\sa240\ql\qnatural
+
+\i \cf0 If you are building from the {\field{\*\fldinst{HYPERLINK "ftp://ftp.mozilla.org/pub/mozilla.org/camino/source"}}{\fldrslt \cf2 \ul \ulc2 source tarball}}, skip to step 5 of this section. Be sure to follow the link to learn about other .mozconfig settings, since the sample is for a development build.
+\i0 \
+Before beginning to pull the source (or unpack the tarball), 
+\b open a new Terminal window (or tab)
+\b0 ; this is necessary because MacPorts updates your 
+\f1 PATH
+\f0  and the new 
+\f1 PATH
+\f0  (and newly-installed programs in directories in the new 
+\f1 PATH
+\f0 ) aren\'92t available to the existing Terminal windows (or tabs).\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls3\ilvl0
+\f1 \cf0 {\listtext	1.	}cd
+\f0  into the directory where you would like to keep your copy of the Camino source code (e.g., 
+\f1 cd ~/lizard
+\f0 ).\
+{\listtext	2.	}Pull the Gecko source:
+\f3 \uc0\u8232 
+\f1 $ hg clone -r CAMINO_2_1_SECBRANCH {\field{\*\fldinst{HYPERLINK "http://hg.mozilla.org/releases/mozilla-1.9.2/"}}{\fldrslt \cf2 \ul \ulc2 http://hg.mozilla.org/releases/mozilla-1.9.2/}} mozilla
+\f3 \uc0\u8232 
+\f0 (Note: Prior to 2012-05-01, the clone command did not include 
+\f1 -r CAMINO_2_1_SECBRANCH
+\f0 )
+\f3 \uc0\u8232 
+\f0 This will download hundreds of megabytes to your computer and will take anywhere from 
+\b 20 minutes to an hour
+\b0  to complete.
+\f3 \uc0\u8232 
+\f0\i (If you have a slow or flaky connection, you may want to use the {\field{\*\fldinst{HYPERLINK "http://ftp.mozilla.org/pub/mozilla.org/firefox/bundles/"}}{\fldrslt \cf2 \ul \ulc2 mozilla-1.9.2 Mercurial bundle}} ({\field{\*\fldinst{HYPERLINK "https://developer.mozilla.org/En/Developer_Guide/Source_Code/Mercurial#Bundles"}}{\fldrslt \cf2 \ul \ulc2 unpacking instructions}}) to bootstrap your mozilla-1.9.2 clone.)
+\i0 \
+\ls3\ilvl0
+\f1 {\listtext	3.	}cd
+\f0  into the 
+\f1 mozilla
+\f0  directory that was just created:
+\f3 \uc0\u8232 
+\f1 $ cd mozilla
+\f0 \
+{\listtext	4.	}Pull the Camino source:
+\f3 \uc0\u8232 
+\f1 $ hg clone {\field{\*\fldinst{HYPERLINK "http://hg.mozilla.org/camino/"}}{\fldrslt \cf2 \ul \ulc2 http://hg.mozilla.org/camino/}} camino
+\f3 \uc0\u8232 
+\f0 It is very important that you are in the 
+\f1 mozilla
+\f0  directory when issuing this command. This will download the Camino source to the appropriate location and should take about 5-10 minutes.\
+{\listtext	5.	}In your 
+\f1 mozilla
+\f0  directory, create a plain text file called 
+\f1 .mozconfig
+\f0  (note the leading period). This file is where you will set up the options for your Camino build. For a development build add the following to your 
+\f1 .mozconfig
+\f0  file (note the leading dot and space):
+\f3 \uc0\u8232 
+\f1 . $topsrcdir/camino/config/mozconfig\
+{\listtext	6.	}ac_add_options --disable-optimize\
+{\listtext	7.	}ac_add_options --enable-debug\
+{\listtext	8.	}mk_add_options MOZ_OBJDIR=@TOPSRCDIR@/../CaminoTrunk\
+{\listtext	9.	}mk_add_options MOZ_MAKE_FLAGS=-j4\uc0\u8232 
+\f0\i\b N.B.
+\b0  If you are trying to build on Mac OS X 10.6, please refer to the {\field{\*\fldinst{HYPERLINK "https://wiki.caminobrowser.org/Development:Building:Mac_OS_X_10.6#.mozconfig"}}{\fldrslt \cf2 \ul \ulc2 .mozconfig}} section of the {\field{\*\fldinst{HYPERLINK "https://wiki.caminobrowser.org/Development:Building:Mac_OS_X_10.6"}}{\fldrslt \cf2 \ul \ulc2 Development:Building:Mac OS X 10.6}} supplemental instructions for additional 
+\f4 .mozconfig
+\f0  contents.
+\i0  
+\f3 \uc0\u8232 
+\f0 (The MOZ_MAKE_FLAGS setting improves build speed, assuming you have a multi-processor or multi-core machine. For older machines, remove that line.) 
+\f3 \uc0\u8232 
+\f0 For examples of other builds types, or to learn more about the 
+\f1 .mozconfig
+\f0  file, see the {\field{\*\fldinst{HYPERLINK "https://wiki.caminobrowser.org/Development:Building:mozconfig"}}{\fldrslt \cf2 \ul \ulc2 .mozconfig page}}. \
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls3\ilvl0
+\b \cf0 {\listtext	10.	}Mac OS X 10.6 only
+\b0  - Apply local patches:
+\f3 \uc0\u8232 
+\f0 On Mac OS X 10.6, you must apply several local patches to make your build succeed. The {\field{\*\fldinst{HYPERLINK "https://wiki.caminobrowser.org/Development:Building:Mac_OS_X_10.6#Local_Patches"}}{\fldrslt \cf2 \ul \ulc2 Local Patches}} section of the {\field{\*\fldinst{HYPERLINK "https://wiki.caminobrowser.org/Development:Building:Mac_OS_X_10.6"}}{\fldrslt \cf2 \ul \ulc2 Development:Building:Mac OS X 10.6}} supplemental instructions contains links to the required patches.\
+{\listtext	11.	}Build:
+\f3 \uc0\u8232 
+\f1 $ make -f client.mk build
+\f3 \uc0\u8232 
+\f0 This will automatically Camino (including various components of Mozilla that Camino requires). The final Camino build ends up in 
+\f1 mozilla/dist
+\f0  (or 
+\f1 $OBJDIR/dist
+\f0 ).\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 For more information on the build process, see {\field{\*\fldinst{HYPERLINK "http://developer.mozilla.org/en/docs/Mac_OS_X_Build_Prerequisites"}}{\fldrslt \cf2 \ul \ulc2 Mac OS X Build Prerequisites}} and {\field{\*\fldinst{HYPERLINK "http://developer.mozilla.org/en/docs/Mac_OS_X_Universal_Binaries"}}{\fldrslt \cf2 \ul \ulc2 Mac OS X Universal Binaries}} in the Mozilla Developer Center.\
+If your build fails, consult the {\field{\*\fldinst{HYPERLINK "https://wiki.caminobrowser.org/Development:Building:FAQ"}}{\fldrslt \cf2 \ul \ulc2 FAQ}} and {\field{\*\fldinst{HYPERLINK "https://wiki.caminobrowser.org/Development:Building:Build_Errors"}}{\fldrslt \cf2 \ul \ulc2 Common Build Errors}} pages.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs36 \cf0 Development\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 To work on Camino application code, open up the 
+\f1 Camino.xcodeproj
+\f0  project (from the 
+\f1 camino
+\f0  directory of your OBJDIR) in Xcode. You can edit code, build, and run from inside of Xcode. (You can, of course, use an editor of your choice and rebuild either from Xcode or from the command line.)\
+When building with Xcode, make sure your build settings match those in your 
+\f1 .mozconfig
+\f0  file: from the "Active Build Style" item in the toolbar, choose "Development" for a debug build, or "Deployment" for an optimized build. If you do not match your settings to your 
+\f1 .mozconfig
+\f0 , your build will fail.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 Camino code\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 If you've changed code only within the 
+\f1 camino
+\f0  directory, you can 
+\i usually
+\i0  rebuild using Xcode. (Again, make sure your build settings match your 
+\f1 .mozconfig
+\f0  file).\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\f2\b \cf0 .in
+\f0  and generated files\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 However, if you\'92ve edited the source files for certain files that are generated during the build process (e.g., the 
+\f1 .in
+\f0  files for 
+\f1 .strings
+\f0  files, 
+\f1 all-camino.js
+\f0 , or the 
+\f1 Makefile
+\f0 ) or any of the 
+\f1 geckochrome
+\f0  overrides, you will need to rebuild using the command line: 
+\f1 cd $OBJDIR/camino; make
+\f0 \
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 Non-Xcode-managed source directories\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 Source directories that appear in the {\field{\*\fldinst{HYPERLINK "http://mxr.mozilla.org/camino/source/camino/Makefile.in#48"}}{\fldrslt 
+\f1 \cf2 DIRS
+\f0 \ul  variable}} in 
+\f1 Makefile.in
+\f0  must be built from command line and cannot be built in Xcode (and, in some cases, must be rebuilt before changes to Xcode-managed source files will compile successfully).\
+Currently, these are 
+\f1 feedhandlers
+\f0 , 
+\f1 flashblock
+\f0 , 
+\f1 geckochrome
+\f0 , 
+\f1 idl
+\f0 , 
+\f1 jsbridge
+\f0 , 
+\f1 striptease
+\f0 , 
+\f1 safebrowsing
+\f0 , and 
+\f1 typeaheadfind
+\f0 .\
+To (re)build any of the directories, build from the command line: 
+\f1 cd $OBJDIR/camino; make
+\f0 \
+\pard\pardeftab720\sa300\ql\qnatural
+
+\f2\b \cf0 Camino.xcodeproj
+\f0  project file\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 Changes to the project file must be made from the source directory, using the source directory\'92s project file, in order for paths to be correct and for 
+\f1 hg diff
+\f0  to pick up the changes. However, if you use an OBJDIR, you\'92ll need to propagate those (as well as any added or renamed sourcefile directories) from the source directory to the OBJDIR before attempting to rebuild.\
+If you use the command-line, just 
+\f1 cd $OBJDIR/camino; make
+\f0 .\
+If you prefer to build in Xcode:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\ql\qnatural
+\ls4\ilvl0\cf0 {\listtext	1.	}Close the OBJDIR copy of the project, if it is still open.\
+{\listtext	2.	}From the command line: 
+\f1 cd $OBJDIR/camino; make export
+\f0  This updates the project file, the 
+\f1 Makefile
+\f0 , and the sourcefile directory symlinks, and generates any headers from 
+\f1 .idl
+\f0  files, but it does not compile any code (see {\field{\*\fldinst{HYPERLINK "https://wiki.caminobrowser.org/Development:Building:Common_make_Targets"}}{\fldrslt \cf2 \ul \ulc2 Development:Building:Common_make_Targets}} for more information about various 
+\f1 make
+\f0  targets).
+\f3 \uc0\u8232 
+\f0 \
+{\listtext	3.	}Re-open the updated OBJDIR project file and build or debug as normal.\
+\pard\pardeftab720\sa240\ql\qnatural
+\cf0 For more information about making changes to the project file, see {\field{\*\fldinst{HYPERLINK "https://wiki.caminobrowser.org/Development:Coding#Project_.28Camino.xcodeproj.29_changes"}}{\fldrslt \cf2 \ul \ulc2 Development:Coding}}.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 Mozilla code\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Unlike Camino code, nearly all Mozilla code is build with Makefiles, so there are no project files to ease development integration, and as a consequence you must open files manually in Xcode or your favorite editor.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 Setting up a Camino-specific 
+\f2 .hgignore
+\f0  file for the Mozilla repository\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 If you plan to work on Mozilla code, you\'92ll want to add a repository-specific 
+\f1 .hgignore
+\f0  file for the Mozilla repository, so that Camino files do not show up as unknown when running Mercurial commands in the Mozilla repository.\
+To do this, edit the 
+\f1 mozilla/.hg/hgrc
+\f0  file and add the following lines:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 [ui]\
+ignore = ~/.hgignore-mozcamino\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\f0 \cf0 Then, in your favorite text editor, make a new plain-text file in your home directory named 
+\f1 .hgignore-mozcamino
+\f0  with the following lines:\
+\pard\pardeftab720\ql\qnatural
+
+\f1 \cf0 # Make mozilla-\{central|1.9.2\} ignore camino\
+^camino\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\f0\b \cf0 Widget code\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 If you\'92ve edited the Cocoa widget code, you can 
+\f1 make
+\f0  in 
+\f1 $OBJDIR/widget/src/cocoa
+\f0  to rebuild the widget library with your changes and then copy the new version of the widget library into your build.\
+The easiest way to get the new version of the library into Camino to test it is to use 
+\f1 cp
+\f0  to copy it into the Camino application package (into 
+\f1 $OBJDIR/camino/build/Development/Camino.app/Contents/MacOS/components
+\f0 ). (This tactic does not work for static builds, which is why they are not recommended for development.) As an alternative, you can 
+\f1 make
+\f0  in 
+\f1 $OBJDIR/camino
+\f0  again.\
+\pard\pardeftab720\sa300\ql\qnatural
+
+\b \cf0 Other changes\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0 \cf0 If you've changed anything outside the 
+\f1 camino
+\f0  directory (aside from widget code \'97 see above), you cannot build from inside Xcode, and will need to 
+\f1 make -f client.mk
+\f0  from the 
+\f1 mozilla
+\f0  directory (or 
+\f1 make
+\f0  from the root of your OBJDIR, if you're using an OBJDIR as recommended by the sample development 
+\f1 .mozconfig
+\f0  above).\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 Stopping or continuing on Xcode build errors\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Depending on your preferences, you may want to set Xcode (and 
+\f1 xcodebuild
+\f0 ) to stop building when it hits a build error (rather than to spend time continuing to build the rest of Camino only to produce a broken executable) or to continue trying to build after errors (perhaps in order to maximize the number of errors you see in a given build attempt). In Xcode 3.1 and newer, this defaults to continuing to build past errors; in older versions of Xcode, the default was to stop on errors.\
+To change this value, toggle the \'93Continue building after errors\'94 checkbox in the \'93Build Options:\'94 section of the \'93Building\'94 pane of Xcode\'92s preferences (or, when Xcode is not running, use the command line 
+\f1 defaults write com.apple.Xcode PBXBuildsContinueAfterErrors -bool false
+\f0 \'97or 
+\f1 true
+\f0  to continue building\'97to set this preference).\
+(Note that if you have a 
+\f1 -j
+\f0  value set in your 
+\f1 .mozconfig
+\f0 , 
+\f1 xcodebuild
+\f0  may continue \'93building\'94 for a short time after hitting an error as the additional tasks that were already running finish.)\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 Updating the source and rebuilding\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Since the Mozilla core (Gecko) and Camino code are always under constant development, you will periodically want to update your source tree to stay current and to make sure your code will not conflict with any changes that have happened since you began working. (You will always want to make sure your tree is current before beginning work on the code and before submitting a patch for review.)\
+Before updating your tree, visit the {\field{\*\fldinst{HYPERLINK "http://tinderbox.mozilla.org/showbuilds.cgi?tree=Camino"}}{\fldrslt \cf2 \ul \ulc2 Tinderbox}} and make sure that the columns whose headings end in \'93Cm2.1-M1.9.2\'94 are green . Then 
+\f1 cd
+\f0  to your 
+\f1 mozilla
+\f0  directory and run the following commands:
+\f3 \uc0\u8232 
+\f1 $ hg pull -u
+\f3 \uc0\u8232 
+\f1 $ cd camino
+\f3 \uc0\u8232 
+\f1 $ hg pull -u
+\f3 \uc0\u8232 
+\f0 Then, to rebuild Gecko and Camino:
+\f3 \uc0\u8232 
+\f1 $ cd ..
+\f3 \uc0\u8232 
+\f1 $ make -f client.mk build
+\f3 \uc0\u8232 \u8232 
+\f0 It's possible in most cases to update only Camino code (unless Gecko changes have made changes to Camino code), but it is still recommended that you update your entire tree regularly. 
+\b To update only the Camino code
+\b0 , 
+\f1 cd
+\f0  to your 
+\f1 mozilla/camino
+\f0  directory and run the following commands:
+\f3 \uc0\u8232 
+\f1 $ hg pull -u
+\f3 \uc0\u8232 
+\f1 $ make
+\f3 \uc0\u8232 \u8232 
+\f0 For OBJDIR builds used by most developers, replace 
+\f1 make
+\f0  with 
+\f1 cd ../../\{OBJDIR\}/camino; make
+\f0  (the sample development 
+\f1 .mozconfig
+\f0  above specifies an OBJDIR by default). Note that in OBJDIR builds, you 
+\b must
+\b0  run 
+\f1 make
+\f0  from the command line after a 
+\f1 hg pull -u
+\f0  that pulls certain types of changes, including project changes and changes to any 
+\f1 .strings
+\f0  file, since updated versions of these files are copied into the OBJDIR or regenerated by Makefile targets.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 Packaging a build for testing\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Sometimes you'll want to create a custom build to allow a large new feature to receive wider testing from the community before review or landing. In order to do this, you need to 
+\b build with a {\field{\*\fldinst{HYPERLINK "https://wiki.caminobrowser.org/Development:Building:mozconfig#Sample_.mozconfig"}}{\fldrslt \cf2 \ul \ulc2 \'93distribution\'94 
+\f2 \ulnone .mozconfig}}
+\b0 . Then, when your build is complete, run 
+\f1 make
+\f0  in 
+\f1 $OBJDIR/camino/installer
+\f0  to produce a disk image for distribution. You can use your existing source tree but \'93swap in\'94 a deployment 
+\f1 .mozconfig
+\f0  that defines a new OBJDIR to provide a clean build.\
+\pard\pardeftab720\sa280\ql\qnatural
+
+\b\fs28 \cf0 Cleaning your tree\
+\pard\pardeftab720\sa240\ql\qnatural
+
+\b0\fs24 \cf0 Sometimes your build will fail because there are stale build products somewhere in the tree and new ones that conflict, or for other reasons related to the state of your tree. This can be fixed by cleaning your tree. To clean your tree, 
+\f1 cd
+\f0  to 
+\f1 mozilla
+\f0  and try 
+\f1 make -f client.mk clean
+\f0 . If that doesn't work, you need to 
+\f1 make -f client.mk distclean
+\f0 .\
+}
